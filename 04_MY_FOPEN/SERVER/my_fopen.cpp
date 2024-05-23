@@ -27,17 +27,17 @@ int get_mode(const char* mode) {
 }
 
 
-int my_fclose(int fd) {
+int my_fclose(MY_FILE fd) {
     return (close(fd));
 }
 
-int my_fopen(const char* file_name, const char* mode) {
+MY_FILE my_fopen(const char* file_name, const char* mode) {
     if((strlen(file_name) < 1) || (strlen(mode) < 1)) {
         puts("Input error.");
         return (-1);
     }   
 
-    int status = -1;
+    MY_FILE status = -1;
 
     switch(get_mode(mode)) {
         case 1:
@@ -80,4 +80,17 @@ int my_fopen(const char* file_name, const char* mode) {
 }
 
 
+int my_fprintf(MY_FILE fd, const char* str) {
 
+    if(str == 0 || strlen(str) < 1) {
+        puts("Invalid stream. Returning.");
+        return (-1);
+    }
+    
+    size_t buf_size = strlen(str);
+
+    return (write(fd, str, buf_size));
+}
+
+
+}
